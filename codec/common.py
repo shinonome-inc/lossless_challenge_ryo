@@ -13,6 +13,6 @@ class _CodecBase(object):
         self._histogram = np.ones(256, np.uint64)
         self._histogram_cumulative = np.cumsum(self._histogram)
 
-    def _update_histogram(self, value):
-        self._histogram[value] += 1
-        self._histogram_cumulative[value:] += 1
+    # def _update_histogram(self, value):#出てきた数字をカウント
+    #     self._histogram[value] += 1
+    #     self._histogram_cumulative[value:] += 1

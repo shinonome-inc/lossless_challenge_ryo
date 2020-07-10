@@ -1,11 +1,13 @@
 import carryless_rangecoder as cr
-from io import BytesIO
 from imageio import imread
+from io import BytesIO
+
 from .common import _CodecBase
 from .common import MAGIC_NUMBER
 from .common import BYTES_M
 from .common import BYTES_H
 from .common import BYTES_W
+from .hahuman import HahumanEncode
 
 
 class Encoder(_CodecBase):
@@ -22,22 +24,27 @@ class Encoder(_CodecBase):
 
         self._encoder = cr.Encoder(self._stream)
 
-    def _encode_per_pixel(self, value):
-        self._encoder.encode(
-            self._histogram.tolist(),
-            self._histogram_cumulative.tolist(),
-            value
-        )
-
+    # def _encode_per_pixel(self, value):
+    #     self._encoder.encode(
+    #         self._histogram.tolist(),
+    #         self._histogram_cumulative.tolist(),
+    #         value
+    #     )
     def encode(self):
-        for y in range(self._height):
-            for x in range(self._width):
-                value = self._image[y, x]
-                self._encode_per_pixel(value)
-                self._update_histogram(value)
+        print("self._image[0]")
+        lst = self._image[0].tolist()
+        he = HahumanEncode(lst)
+        hahuman_tree = he.hahuman_tree()
+        print(hahuman_tree)
 
-        self._encoder.finish()
-        decoded = self._stream.getvalue()
-        open(self._output, 'wb').write(decoded)
+        # for y in range(self._height):
+        #     for x in range(self._width):
+        #         value = self._image[y, x]
+        #         self._encode_per_pixel(value)
+        #         self._update_histogram(value)
 
-        return len(decoded) * 8 / self._image.size
+        # self._encoder.finish()
+        # decoded = self._stream.getvalue()
+        # open(self._output, 'wb').write(decoded)
+
+        # return len(decoded) * 8 / self._image.size
