@@ -31,11 +31,10 @@ class Encoder(_CodecBase):
     #         value
     #     )
     def encode(self):
-        print("self._image[0]")
         lst = self._image[0].tolist()
         he = HahumanEncode(lst)
-        hahuman_tree = he.hahuman_tree()
-        print(hahuman_tree)
+        hahuman = he.hahumancoding()
+        print(hahuman)
 
         # for y in range(self._height):
         #     for x in range(self._width):
