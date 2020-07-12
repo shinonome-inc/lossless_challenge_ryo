@@ -7,6 +7,8 @@ from .common import BYTES_M
 from .common import BYTES_H
 from .common import BYTES_W
 from .dic import code
+from .filter import sub_filter
+from .filter import up_filter
 
 class Encoder(_CodecBase):
     def __init__(self, input, output):
@@ -21,6 +23,7 @@ class Encoder(_CodecBase):
         self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
 
         self._encoder = cr.Encoder(self._stream)
+        self._imgfilter = self._image
 
     def _encode_per_pixel(self, value):
         value = code[value]
@@ -31,6 +34,7 @@ class Encoder(_CodecBase):
         # )
 
     def encode(self):
+        self._imgfilter = up_filter(self)
         for y in range(self._height):
             for x in range(self._width):
                 value = self._image[y, x]
