@@ -6,7 +6,7 @@ from .common import MAGIC_NUMBER
 from .common import BYTES_M
 from .common import BYTES_H
 from .common import BYTES_W
-
+from .dic import code
 
 class Encoder(_CodecBase):
     def __init__(self, input, output):
@@ -23,11 +23,12 @@ class Encoder(_CodecBase):
         self._encoder = cr.Encoder(self._stream)
 
     def _encode_per_pixel(self, value):
-        self._encoder.encode(
-            self._histogram.tolist(),
-            self._histogram_cumulative.tolist(),
-            value
-        )
+        value = code[value]
+        # self._encoder.encode(
+        #     self._histogram.tolist(),
+        #     self._histogram_cumulative.tolist(),
+        #     value
+        # )
 
     def encode(self):
         for y in range(self._height):
