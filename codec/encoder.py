@@ -23,10 +23,10 @@ class Encoder(_CodecBase):
         self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
 
         self._encoder = cr.Encoder(self._stream)
-        self._imgfilter = self._image
 
     def _encode_per_pixel(self, value):
         value = code[value]
+
         # self._encoder.encode(
         #     self._histogram.tolist(),
         #     self._histogram_cumulative.tolist(),
@@ -34,7 +34,9 @@ class Encoder(_CodecBase):
         # )
 
     def encode(self):
-        self._imgfilter = up_filter(self)
+        print(self._image[0])
+        # self._image = sub_filter(self._image, self._height, self._width)
+        self._image = up_filter(self._image, self._height, self._width)
         for y in range(self._height):
             for x in range(self._width):
                 value = self._image[y, x]
