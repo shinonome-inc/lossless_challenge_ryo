@@ -34,7 +34,6 @@ class Encoder(_CodecBase):
         # )
 
     def encode(self):
-        print(self._image[0])
         # self._image = sub_filter(self._image, self._height, self._width)
         self._image = up_filter(self._image, self._height, self._width)
         for y in range(self._height):
