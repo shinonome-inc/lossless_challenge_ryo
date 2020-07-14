@@ -1,3 +1,8 @@
+import numpy as np
+
+filter = np.zeros((256, 256), dtype='uint')
+
+
 def sub_filter(array, height, width):
     """Apply a sub_filter.
 
@@ -9,9 +14,9 @@ def sub_filter(array, height, width):
 
     """
     for y in range(height):
-        for x in range(width - 1, 0, -1):
-            array[y][x] = int(array[y][x]) - int(array[y][x-1])
-    return array
+        for x in range(1, width):
+            filter[y][x] = array[y][x] - array[y][x-1]
+    return filter
 
 
 def up_filter(array, height, width):
@@ -24,7 +29,7 @@ def up_filter(array, height, width):
     width: int
 
     """
-    for y in range(height-1, 0, -1):
+    for y in range(1, height):
         for x in range(width):
-            array[y][x] = int(array[y][x]) - int(array[y-1][x])
-    return array
+            filter[y][x] = array[y][x] - array[y-1][x]
+    return filter
