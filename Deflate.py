@@ -114,10 +114,10 @@ class Deflate(object):
                           まず，data1にはLZSSの影響を受けていない画素の値，data2にはLZSSによって変換された位置と長さの値を収納し，
                           それらに含まれる要素をkey,その要素の頻度をvalueとする辞書elements_frequencyを作成します。
                           そしてelements_frequencyのvalueとkeyを同じリストに入れ（value），さらにそのリストを集めたリストをtreeとし，
-　　　　　　　　　　　　　　　　　　　　treeをheapにした後はvalue，すなわち頻度が最小の２つを取り出していき，そのたびに取り出された要素がkeyとなるcodetableのvalueに，ハフマン木の符号となる0または1を加えます。
-　　　　　　　　　　　　　　　　　　　　そして取り出された2つの和を取って新たにtreeに加え，最終的にtreeが完成するまで繰り返します。
+　　　　　　　　　　　　　 　treeをheapにした後はvalue，すなわち頻度が最小の２つを取り出していき，そのたびに取り出された要素がkeyとなるcodetableのvalueに，
+                          ハフマン木の符号となる0または1を加えます。そして取り出された2つの和を取って新たにtreeに加え，最終的にtreeが完成するまで繰り返します。
 
-　　　　　　　　　　　　　　　　　　　　　huffman_switchmark　：　str
+　　　　　　　　　　　　　　 huffman_switchmark　：　str
                            デコードの際，tree2におけるハフマン木を用いる際は，この 0の羅列を目印にします。
 　　　　　　　　　　　　　　　　　　　　
         """
