@@ -37,7 +37,7 @@ def lzss(data):
         if data[index] in data_reference and index < len(data) - 2\
                                          and len(data_reference) > 3:
             matchindexes = [i for i, x in enumerate(data_reference)\
-                            if x == data[index]]
+                            if x == data[index] and i < len(data_reference)-2]
             matchindexes_and_length = {}
             for matchindex in matchindexes:
                 if data[index + 1] != data_reference[matchindex + 1] or \
