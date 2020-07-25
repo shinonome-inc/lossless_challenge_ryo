@@ -8,7 +8,7 @@ class Filter(object):
 
 
     def sub(self):
-        data_filtered = np.zeros((28, 28))
+        data_filtered = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28):
             for column in range(28):
                 if column == 0:
@@ -19,7 +19,7 @@ class Filter(object):
 
 
     def sub_decode(self) :
-        data_original = np.zeros((28, 28))
+        data_original = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28) :
             for column in range(28) :
                 if column == 0 :
@@ -29,7 +29,7 @@ class Filter(object):
         return data_original
 
     def up(self):
-        data_filtered = np.zeros((28, 28))
+        data_filtered = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28):
             for column in range(28):
                 if raw == 0:
@@ -40,7 +40,7 @@ class Filter(object):
 
 
     def up_decode(self):
-        data_original = np.zeros((28, 28))
+        data_original = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28):
             for column in range(28):
                 if raw == 0:
@@ -51,7 +51,7 @@ class Filter(object):
 
 
     def average(self):
-        data_filtered = np.zeros((28, 28))
+        data_filtered = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28):
             for column in range(28):
                 if raw == 0 or column == 0:
@@ -62,7 +62,7 @@ class Filter(object):
 
 
     def average_decode(self):
-        data_original = np.zeros((28, 28))
+        data_original = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28):
             for column in range(28):
                 if raw == 0 or column == 0:
@@ -98,7 +98,7 @@ class Filter(object):
 
 
     def peath(self):
-        data_filtered = np.zeros((28, 28))
+        data_filtered = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28) :
             for column in range(28) :
                 if raw == 0 or column == 0 :
@@ -110,7 +110,7 @@ class Filter(object):
 
 
     def peath_decode(self):
-        data_original = np.zeros((28, 28))
+        data_original = np.zeros((28, 28), dtype = np.uint8)
         for raw in range(28) :
             for column in range(28) :
                 if raw == 0 or column == 0 :
