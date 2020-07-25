@@ -7,9 +7,10 @@ from .common import MAGIC_NUMBER
 from .common import BYTES_M
 from .common import BYTES_H
 from .common import BYTES_W
-from .dic import code
-from .filter import sub_filter
-from .filter import up_filter
+from .filter import Filter
+from .helper import runlength_encode
+from .huffman import HuffmanCoding
+
 
 class Encoder(_CodecBase):
     def __init__(self, input, output):
@@ -24,29 +25,37 @@ class Encoder(_CodecBase):
         self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
 
         self._encoder = cr.Encoder(self._stream)
-        self._imgfilter = np.zeros((256, 256), dtype='uint')
-        self._hahuman = ""
 
     def _encode_per_pixel(self, value):
-        value = code[value]
-        self._hahuman += value
-
-        # self._encoder.encode(
-        #     self._histogram.tolist(),
-        #     self._histogram_cumulative.tolist(),
-        #     value
-        # )
+        self._encoder.encode(
+            self._histogram.tolist(),
+            self._histogram_cumulative.tolist(),
+            value
+        )
 
     def encode(self):
-        self._imgfilter = sub_filter(self._image, self._height, self._width)
-        # self._image = up_filter(self._image, self._height, self._width)
-        for y in range(self._height):
-            for x in range(self._width):
-                value = self._image[y, x]
-                self._encode_per_pixel(value)
-                self._update_histogram(value)
+        data = runlength_encode(self._image.ravel())
 
-        self._encoder.finish()
+        # Runlength + huffman
+        huff = HuffmanCoding()
+        out = huff.encode(data)
+
+        for i in list(int(out[i : i + 8], 2) for i in range(0, len(out), 8)):
+            self._stream.write(i.to_bytes(1, "big"))
+
+        # Runlength + rangecoder
+        # for value in data:
+        #     self._encode_per_pixel(value)
+        #     self._update_histogram(value)
+
+        # Default 
+        # for y in range(self._height):
+        #     for x in range(self._width):
+        #         value = self._image[y, x]
+        #         self._encode_per_pixel(value)
+        #         self._update_histogram(value)
+
+        # self._encoder.finish()
         decoded = self._stream.getvalue()
         open(self._output, 'wb').write(decoded)
 

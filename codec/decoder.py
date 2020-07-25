@@ -30,12 +30,25 @@ class Decoder(_CodecBase):
         )
 
     def decode(self):
-        self._decoder.start()
+        # print(list(memoryview(self.stream.read())))
+        # print("")
 
-        for y in range(self._height):
-            for x in range(self._width):
-                value = self._decode_per_pixel()
-                self._update_histogram(value)
-                self._image[y, x] = value
+        # Decode huffman codes
+        data = list(memoryview(self.stream.read()))
 
-        imwrite(self._output, self._image)
+        decoded = list(map(lambda x: format(x, '08b'), data))
+        print("".join(decoded))
+
+
+
+
+
+        # self._decoder.start()
+
+        # for y in range(self._height):
+        #     for x in range(self._width):
+        #         value = self._decode_per_pixel()
+        #         self._update_histogram(value)
+        #         self._image[y, x] = value
+
+        # imwrite(self._output, self._image)
