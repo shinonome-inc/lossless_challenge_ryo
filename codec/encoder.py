@@ -1,4 +1,5 @@
 import carryless_rangecoder as cr
+import numpy as np
 from io import BytesIO
 from imageio import imread
 from .common import _CodecBase
@@ -6,7 +7,9 @@ from .common import MAGIC_NUMBER
 from .common import BYTES_M
 from .common import BYTES_H
 from .common import BYTES_W
-
+from .dic import code
+from .filter import sub_filter
+from .filter import up_filter
 
 class Encoder(_CodecBase):
     def __init__(self, input, output):
@@ -21,15 +24,22 @@ class Encoder(_CodecBase):
         self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
 
         self._encoder = cr.Encoder(self._stream)
+        self._imgfilter = np.zeros((256, 256), dtype='uint')
+        self._hahuman = ""
 
     def _encode_per_pixel(self, value):
-        self._encoder.encode(
-            self._histogram.tolist(),
-            self._histogram_cumulative.tolist(),
-            value
-        )
+        value = code[value]
+        self._hahuman += value
+
+        # self._encoder.encode(
+        #     self._histogram.tolist(),
+        #     self._histogram_cumulative.tolist(),
+        #     value
+        # )
 
     def encode(self):
+        self._imgfilter = sub_filter(self._image, self._height, self._width)
+        # self._image = up_filter(self._image, self._height, self._width)
         for y in range(self._height):
             for x in range(self._width):
                 value = self._image[y, x]
