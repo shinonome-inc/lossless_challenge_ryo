@@ -12,13 +12,11 @@ class Encoder(_CodecBase):
     def __init__(self, input, output):
         super(Encoder, self).__init__()
         self._stream = BytesIO()
-        self._image = imread(input)
+        self._image = input
         self._output = output
         self._height, self._width = self._image.shape
 
         self._stream.write(MAGIC_NUMBER.to_bytes(BYTES_M, 'big'))
-        self._stream.write(self._width.to_bytes(BYTES_W, 'big'))
-        self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
 
         self._encoder = cr.Encoder(self._stream)
 
@@ -40,4 +38,4 @@ class Encoder(_CodecBase):
         decoded = self._stream.getvalue()
         open(self._output, 'wb').write(decoded)
 
-        return len(decoded) * 8 / self._image.size
+        return (len(decoded) * 8 +98)/ 784

@@ -16,12 +16,12 @@ class Decoder(_CodecBase):
         self._output = output
 
         assert int.from_bytes(self.stream.read(BYTES_M), 'big') == MAGIC_NUMBER
-        self._width = int.from_bytes(self.stream.read(BYTES_W), 'big')
-        self._height = int.from_bytes(self.stream.read(BYTES_H), 'big')
+        self._width = 28
+        self._height = 28
         self._image = np.empty((self._height, self._width), np.uint8)
 
         self._decoder = cr.Decoder(self.stream)
-        self.stream.seek(BYTES_M + BYTES_W + BYTES_H)
+        self.stream.seek(BYTES_M)
 
     def _decode_per_pixel(self):
         return self._decoder.decode(
