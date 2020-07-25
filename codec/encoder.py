@@ -24,7 +24,6 @@ class Encoder(_CodecBase):
         self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
 
         self._encoder = cr.Encoder(self._stream)
-        self._imgfilter = np.zeros((256, 256), dtype='uint')
         self._hahuman = ""
 
     def _encode_per_pixel(self, value):
