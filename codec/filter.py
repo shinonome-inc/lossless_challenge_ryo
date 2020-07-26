@@ -1,6 +1,87 @@
 import numpy as np
 
+def filter_encode(img, fid):
+    """
+    Applies filter to given image
 
+    Parameters:
+        img: np.ndarray
+            Input image
+        fid: int
+            kind of filter to apply
+    
+    Returns:
+        out: np.ndarray
+
+    ------------------------------------------
+    Filter fids:
+        0: None -> Do not apply any filter
+        1: Sub -> Row wise
+        2: Up -> Column wise
+        3: Avg -> Average filter
+    """
+    out = img.copy()
+    H, W = img.shape
+
+    # Sub
+    if fid ==1:
+        for h in range(H):
+            for w in range(1, W):
+                out[h, w] = img[h, w] - img[h, w-1]
+    # Up
+    elif fid == 2:
+        for h in range(1, H):
+            for w in range(W):
+                out[h, w] = img[h, w] - img[h-1, w]
+    # Average
+    elif fid == 3:
+        for h in range(1, H):
+            for w in range(1, W):
+                out[h, w] = img[h, w] - (img[h, w-1] + img[h-1, w]) // 2
+    
+
+    return out
+
+def filter_decode(img, fid):
+    """
+    Decodes filter of given image
+
+    Parameters:
+        img: np.ndarray(dtype=uint8)
+            filtered image
+        fid: int
+            kind of filter to decode
+    
+    Returns:
+        out: np.ndarray
+
+    ------------------------------------------
+    Filter fids:
+        0: None -> Do not apply any filter
+        1: Sub -> Row wise
+        2: Up -> Column wise
+        3: Avg -> Average filter
+    """
+    out = img.copy()
+    H, W = img.shape
+
+    if fid == 1:
+        for h in range(H):
+            for w in range(1, W):
+                out[h, w] = out[h, w] + out[h, w-1]
+    
+    elif fid == 2:
+        for h in range(1, H):
+            for w in range(W):
+                out[h, w] = out[h, w] + out[h-1, w]
+    
+    elif fid == 3:
+        for h in range(1, H):
+            for w in range(1, W):
+                out[h, w] = out[h, w] + (out[h, w-1] + out[h-1, w]) // 2
+    
+
+    return out
 
 class Filter(object):
     """

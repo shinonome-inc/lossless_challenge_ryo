@@ -5,13 +5,20 @@ def runlength_encode(data):
 
     cnt = 1
     for i in range(1, len(data)):
+        # Split run if it's longer than 255 (for rangecoder)
+        if cnt == 255:
+            out.append(data[i-1])
+            out.append(data[i-1])
+            out.append(cnt)
+            cnt = 0
+        
         if data[i] == data[i-1]:
             cnt += 1
             continue
         
         out.append(data[i-1])
 
-        if cnt != 1:
+        if cnt > 1:
             out.append(data[i-1])
             out.append(cnt)
             cnt = 1

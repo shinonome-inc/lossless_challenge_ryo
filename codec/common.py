@@ -7,6 +7,11 @@ BYTES_M = 2
 BYTES_H = 2
 BYTES_W = 2
 
+# filter and MAP info
+BYTES_FILTER = 1
+NUM_OF_FILTER = 4
+
+
 
 class _CodecBase(object):
     def __init__(self):
