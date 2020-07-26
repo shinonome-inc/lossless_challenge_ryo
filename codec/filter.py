@@ -1,5 +1,6 @@
 import numpy as np
 
+
 def filter_encode(img, fid):
     """
     Applies filter to given image
@@ -22,6 +23,7 @@ def filter_encode(img, fid):
     """
     out = img.copy()
     H, W = img.shape
+
 
     # Sub
     if fid ==1:
@@ -46,6 +48,7 @@ def filter_decode(img, fid):
     """
     Decodes filter of given image
 
+
     Parameters:
         img: np.ndarray(dtype=uint8)
             filtered image
@@ -64,6 +67,7 @@ def filter_decode(img, fid):
     """
     out = img.copy()
     H, W = img.shape
+
 
     if fid == 1:
         for h in range(H):

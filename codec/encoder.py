@@ -28,6 +28,7 @@ class Encoder(_CodecBase):
 
         self._encoder = cr.Encoder(self._stream)
 
+
     def _encode_per_pixel(self, value):
         self._encoder.encode(
             self._histogram.tolist(),
