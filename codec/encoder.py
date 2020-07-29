@@ -41,6 +41,9 @@ class Encoder(_CodecBase):
         img_filtered = filter_encode(self._image, self._filter_id)
         data = runlength_encode(img_filtered.ravel())
 
+        # Huffman test
+        
+
         # Runlength + rangecoder
         for value in data:
             self._encode_per_pixel(value)
