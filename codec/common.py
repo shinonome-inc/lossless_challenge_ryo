@@ -9,7 +9,9 @@ BYTES_W = 2
 
 # filter and MAP info
 BYTES_FILTER = 1
-NUM_OF_FILTER = 4
+NUM_FILTER = 4
+BYTES_MAP = 1
+NUM_MAP = 2
 
 
 

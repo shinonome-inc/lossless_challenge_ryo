@@ -1,6 +1,6 @@
 import numpy as np 
 from codec import Decoder
-from .codecfile import compress, extract
+from codecfile import compress, extract
 
 
 def imwrite(ndarray, path):

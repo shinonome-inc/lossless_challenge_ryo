@@ -3,6 +3,8 @@ import multiprocessing as multi
 from multiprocessing import Pool
 
 from codec import Encoder
+from codec.common import NUM_FILTER
+from codec.common import NUM_MAP
 
 def encode(cmb):
     """
@@ -19,9 +21,8 @@ def encode(cmb):
 
     """
     img, filter_id, map_id = cmb
-
-    enc = Encoder(img, filter_id)
-
+    print(filter_id, map_id)
+    enc = Encoder(img, filter_id, map_id)
     return enc.encode()
     
 
@@ -39,13 +40,14 @@ def compress(img):
             Compressed image with shortest length among all trials
 
     """
-    list_of_combinations = []
+    combinations = [(img.copy(), i, j) for i in range(NUM_FILTER) for j in range(NUM_MAP)]
 
     n_cores = multi.cpu_count()
     with Pool(n_cores) as p:
-        results = p.map(func=encode, args=list_of_combinations)
+        results = p.map(encode, combinations)
     
-    best = results[np.argmax(results)]
+    print(results)
+    best = results[np.argmin(list(map(len, results)))]
 
     return best
 

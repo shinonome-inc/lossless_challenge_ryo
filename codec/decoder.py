@@ -8,8 +8,10 @@ from .common import BYTES_M
 from .common import BYTES_H
 from .common import BYTES_W
 from .common import BYTES_FILTER
+from .common import BYTES_MAP
 from .helper import runlength_decode
 from .filter import filter_decode 
+from .scanner import map_decode
 
 
 class Decoder(_CodecBase):
@@ -21,10 +23,11 @@ class Decoder(_CodecBase):
         self._width = int.from_bytes(self.stream.read(BYTES_W), 'big')
         self._height = int.from_bytes(self.stream.read(BYTES_H), 'big')
         self._filter_id = int.from_bytes(self.stream.read(BYTES_FILTER), 'big')
+        self._map_id = int.from_bytes(self.stream.read(BYTES_MAP), 'big')
         self._image = np.empty((self._height, self._width), np.uint8)
 
         self._decoder = cr.Decoder(self.stream)
-        self.stream.seek(BYTES_M + BYTES_W + BYTES_H + BYTES_FILTER)
+        self.stream.seek(BYTES_M + BYTES_W + BYTES_H + BYTES_FILTER + BYTES_MAP)
 
     def _decode_per_pixel(self):
         return self._decoder.decode(
@@ -33,6 +36,8 @@ class Decoder(_CodecBase):
         )
 
     def decode(self):
+        print("height: {}, width: {}".format(self._height, self._width))
+        print("Filter: {}, map: {}".format(self._filter_id, self._map_id))
         data = []
         self._decoder.start()
 
@@ -42,7 +47,8 @@ class Decoder(_CodecBase):
                 self._update_histogram(value)
                 data.append(value)
 
-        rle_decoded = np.array(runlength_decode(data)).reshape(self._height, self._width).astype(np.uint8)
-        ft_decoded = filter_decode(rle_decoded, self._filter_id)
+        rle_decoded = runlength_decode(data)
+        map_decoded = map_decode(rle_decoded, self._map_id)
+        ft_decoded = filter_decode(map_decoded, self._filter_id)
 
         return ft_decoded
