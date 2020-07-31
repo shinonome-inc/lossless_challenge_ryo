@@ -6,6 +6,7 @@ MAGIC_NUMBER = (ord('H') << 8) + ord('C')
 BYTES_M = 2
 BYTES_H = 2
 BYTES_W = 2
+BYTES_FLAG = 1
 
 # filter and MAP info
 BYTES_FILTER = 1
