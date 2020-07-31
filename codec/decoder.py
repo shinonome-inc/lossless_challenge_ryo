@@ -19,7 +19,7 @@ class Decoder(_CodecBase):
         super(Decoder, self).__init__()
         self.stream = BytesIO(open(input, 'rb').read())
 
-        self.algorithm_identify = int.from_bytes(self.stream.read(ALGORITHM_IDENTIFY), 'big')
+        self.algorithm_identify = int.from_bytes(self.stream.read(BYTES_FLAG), 'big')
         self._filter_id = int.from_bytes(self.stream.read(BYTES_FILTER), 'big')
         self._map_id = int.from_bytes(self.stream.read(BYTES_MAP), 'big')
         self._image = np.empty((self._height, self._width), np.uint8)
