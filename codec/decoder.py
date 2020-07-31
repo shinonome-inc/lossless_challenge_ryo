@@ -3,10 +3,7 @@ from io import BytesIO
 from imageio import imwrite, imread
 import numpy as np
 from .common import _CodecBase
-from .common import MAGIC_NUMBER
-from .common import BYTES_M
-from .common import BYTES_H
-from .common import BYTES_W
+from .common import BYTES_FLAG
 from .common import BYTES_FILTER
 from .common import BYTES_MAP
 from .helper import runlength_decode
@@ -25,7 +22,7 @@ class Decoder(_CodecBase):
         self._image = np.empty((self._height, self._width), np.uint8)
 
         self._decoder = cr.Decoder(self.stream)
-        self.stream.seek(BYTES_M + BYTES_W + BYTES_H + BYTES_FILTER + BYTES_MAP)
+        self.stream.seek(BYTES_FLAG + BYTES_FILTER + BYTES_MAP)
 
     def _decode_per_pixel(self):
         return self._decoder.decode(
