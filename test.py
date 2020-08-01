@@ -7,7 +7,7 @@ from codec import Encoder, Decoder
 from codecfile import compress, extract
 from llc_io import imread, imwrite
 
-INPUT_IMG = imageio.imread("path to your image")
+INPUT_IMG = imageio.imread("/Users/ryomasutani/Desktop/machine-learning/CV/image_processing/image_compression/sample.png")
 
 def test_decoder():
     enc = Encoder(INPUT_IMG, 1, 1)
@@ -58,10 +58,15 @@ def test_llc_io():
     
     print("llc_io test: Passed")
 
+def test_huffman():
+    enc = Encoder(INPUT_IMG, 1, 1)
+    enc.encode()
+
 
 def main():
     # test_decoder()
-    test_llc_io()
+    # test_llc_io()
+    test_huffman()
 
 
 if __name__ == "__main__":

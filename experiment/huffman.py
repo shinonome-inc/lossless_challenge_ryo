@@ -108,20 +108,20 @@ class HuffmanCoding:
         return ans
 
 
-def main():
-    data = [3, 3, 3, 0, 0, 0, 0, 0, 0, 2, 3, 5, 5, 5,
-            5, 5, 4, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    print("Input data: {}".format(data))
-    huff = HuffmanCoding()
+# def main():
+#     data = [3, 3, 3, 0, 0, 0, 0, 0, 0, 2, 3, 5, 5, 5,
+#             5, 5, 4, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+#     print("Input data: {}".format(data))
+#     huff = HuffmanCoding()
 
-    encoded = huff.encode(data)
-    decoded = huff.decode(encoded)
+#     encoded = huff.encode(data)
+#     decoded = huff.decode(encoded)
 
-    print("Encoded data: {}".format(encoded))
-    print("Decoded data: {}".format(decoded))
+#     print("Encoded data: {}".format(encoded))
+#     print("Decoded data: {}".format(decoded))
 
-    print(huff.code)
+#     print(huff.code)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()
