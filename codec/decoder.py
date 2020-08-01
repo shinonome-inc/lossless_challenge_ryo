@@ -26,7 +26,10 @@ class Decoder(_CodecBase):
         self.stream.seek(BYTES_FLAG + BYTES_DICT + BYTES_FILTER + BYTES_MAP)
         
     def read_pixel(self):
-        pixels = np.array(int.from_bytes(self.stream.read(BYTES_FLAG), 'big'), dtype = np.uint8)
+        pixels_bytes = self.stream.read()
+        pixels = []
+        for i in pixel_bytes:
+            pixels.append(int.from_bytes(self.stream.read(1), 'big'))
         return pixels
         
     
