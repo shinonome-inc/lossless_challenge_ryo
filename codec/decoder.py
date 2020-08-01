@@ -23,7 +23,7 @@ class Decoder(_CodecBase):
         self._image = np.empty((self._height, self._width), np.uint8)
 
         self._decoder = cr.Decoder(self.stream)
-        self.stream.seek(BYTES_FLAG + BYTES_FILTER + BYTES_MAP)
+        self.stream.seek(BYTES_FLAG + BYTES_DICT + BYTES_FILTER + BYTES_MAP)
 
     def _decode_per_pixel(self):
         return self._decoder.decode(
