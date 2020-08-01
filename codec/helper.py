@@ -66,3 +66,23 @@ def to_freq_vector(arr):
     freq_vector = np.array(list(d.values()))
 
     return freq_vector
+
+def from_dict(d, s):
+    dec_d = {y:x for x,y in d.items()}
+
+    tmp = ""
+    ans = []
+
+    for i in s:
+        tmp += i
+
+        if tmp not in dec_d.keys():
+            continue
+
+        ans.append(dec_d[tmp])
+        tmp = ""
+    
+    return ans
+
+
+        

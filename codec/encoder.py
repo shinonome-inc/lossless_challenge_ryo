@@ -10,6 +10,7 @@ from .common import BYTES_H
 from .common import BYTES_W
 from .common import BYTES_FILTER
 from .common import BYTES_MAP
+from .common import FLAG_HUF, FLAG_RNG, BYTES_FLAG, BYTES_DICT
 from .filter import filter_encode
 from .helper import runlength_encode, to_freq_vector
 from .scanner import map_encode
@@ -26,17 +27,16 @@ class Encoder(_CodecBase):
         self._map_id = int(map_id)
         self._height, self._width = self._image.shape
 
+        self._dummy_id = 0
+
         # Rangecoder
-        self._stream.write(MAGIC_NUMBER.to_bytes(BYTES_M, 'big'))
-        self._stream.write(self._width.to_bytes(BYTES_W, 'big'))
-        self._stream.write(self._height.to_bytes(BYTES_H, 'big'))
+        self._stream.write(FLAG_RNG.to_bytes(BYTES_FLAG, "big"))
         self._stream.write(self._filter_id.to_bytes(BYTES_FILTER, 'big'))
         self._stream.write(self._map_id.to_bytes(BYTES_MAP, 'big'))
+        self._stream.write(self._dummy_id.to_bytes(BYTES_MAP, 'big'))
 
         # Huffman
-        self._stream_huff.write(MAGIC_NUMBER.to_bytes(BYTES_M, 'big'))
-        self._stream_huff.write(self._width.to_bytes(BYTES_W, 'big'))
-        self._stream_huff.write(self._height.to_bytes(BYTES_H, 'big'))
+        self._stream_huff.write(FLAG_HUF.to_bytes(BYTES_FLAG, "big"))
         self._stream_huff.write(self._filter_id.to_bytes(BYTES_FILTER, 'big'))
         self._stream_huff.write(self._map_id.to_bytes(BYTES_MAP, 'big'))
 
@@ -61,12 +61,14 @@ class Encoder(_CodecBase):
         # Determine label
         freq = to_freq_vector(data)
         label = np.argmin(np.apply_along_axis(lambda x: np.linalg.norm(freq-x), 1, cluster_centers))
+        self._stream_huff.write(int(label).to_bytes(BYTES_DICT, 'big'))
+
         # Encoding
         huff = HuffmanCoding()
         huff.code = dicts[label]
         encoded = huff.encode(data)
 
-        print(encoded, len(encoded)*8 / (784))
+        # print(encoded, len(encoded)*8 / (784))
 
         # Write 
         last_len = len(encoded) % 8
@@ -101,11 +103,16 @@ class Encoder(_CodecBase):
         #         self._update_histogram(value)
 
         self._encoder.finish()
-        encoded = self._stream.getvalue()
+        range_encoded = self._stream.getvalue()
 
         print("")
-        print("HUFFMAN: {}".format(len(huff_encoded)*8 / 784))
-        print("RANGE: {}".format(len(encoded) * 8 / 784))
+        print("HUFFMAN: {}".format(len(huff_encoded) * 8 / 784))
+        print("RANGE: {}".format(len(range_encoded) * 8 / 784))
 
-        return encoded
+        if len(range_encoded) >= len(huff_encoded):
+            return huff_encoded
+        else:
+            return range_encoded
+
+        # return encoded
 

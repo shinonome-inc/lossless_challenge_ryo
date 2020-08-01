@@ -22,6 +22,7 @@ class Node:
 
 class HuffmanCoding:
     def __init__(self):
+        self.freq = ""
         self.heap = []
         self.code = {}
         self.tree = None
@@ -77,7 +78,7 @@ class HuffmanCoding:
 
     def encode(self, nums):
         # Count frequency
-        freq = self.count_freq_dict(nums)
+        freq = self.freq
         self.create_heap(freq)
 
         # Code table
