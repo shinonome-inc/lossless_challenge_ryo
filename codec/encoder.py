@@ -1,3 +1,4 @@
+import os
 import carryless_rangecoder as cr
 import numpy as np
 import pickle
@@ -52,10 +53,11 @@ class Encoder(_CodecBase):
     
 
     def _encode_huffman(self, data):
+        base = os.path.dirname(os.path.abspath(__file__))
         # Load data
-        with open("codec/pickles/cluster_centers.pkl", "rb") as f:
+        with open(os.path.normpath(os.path.join(base, 'pickles/cluster_centers.pkl')), "rb") as f:
             cluster_centers = pickle.load(f)
-        with open("codec/pickles/dicts.pkl", "rb") as f:
+        with open(os.path.normpath(os.path.join(base, 'pickles/dicts.pkl')), "rb") as f:
             dicts = pickle.load(f)
         
         # Determine label

@@ -3,6 +3,7 @@ from io import BytesIO
 from imageio import imwrite, imread
 import numpy as np
 import pickle
+import os
 from .common import _CodecBase
 from .common import MAGIC_NUMBER
 from .common import BYTES_M
@@ -43,8 +44,9 @@ class Decoder(_CodecBase):
     
     
     def _decode_huffman(self):
+        base = os.path.dirname(os.path.abspath(__file__))
         # load data 
-        with open("codec/pickles/dicts.pkl", "rb") as f:
+        with open(os.path.normpath(os.path.join(base, 'pickles/dicts.pkl')), "rb") as f:
             dicts = pickle.load(f)
 
         code = dicts[self._dict_id]
@@ -70,6 +72,7 @@ class Decoder(_CodecBase):
         
         
     def decode(self):
+        print("Compressed with: {}".format)
         print("Filter: {}, map: {}".format(self._filter_id, self._map_id))
 
         data = None
