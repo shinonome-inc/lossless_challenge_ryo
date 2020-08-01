@@ -24,6 +24,12 @@ class Decoder(_CodecBase):
 
         self._decoder = cr.Decoder(self.stream)
         self.stream.seek(BYTES_FLAG + BYTES_DICT + BYTES_FILTER + BYTES_MAP)
+        
+    def read_pixel(self):
+        pixels = np.array(int.from_bytes(self.stream.read(BYTES_FLAG), 'big'), dtype = np.uint8)
+        return pixels
+        
+    
 
     def _decode_per_pixel(self):
         return self._decoder.decode(
