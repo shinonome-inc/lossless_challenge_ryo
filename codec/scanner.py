@@ -60,9 +60,9 @@ def column_wise_decode(arr):
     """
     H, W = 28, 28
     
-    plt.figure(1)
-    plt.imshow(np.array(arr).reshape(H, W))
-    plt.show()
+    # plt.figure(1)
+    # plt.imshow(np.array(arr).reshape(H, W))
+    # plt.show()
 
     img = np.array(arr).reshape(H, W).astype(np.uint8).T
     return img

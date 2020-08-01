@@ -22,6 +22,7 @@ class Node:
 
 class HuffmanCoding:
     def __init__(self):
+        self.freq = ""
         self.heap = []
         self.code = {}
         self.tree = None
@@ -77,7 +78,7 @@ class HuffmanCoding:
 
     def encode(self, nums):
         # Count frequency
-        freq = self.count_freq_dict(nums)
+        freq = self.freq
         self.create_heap(freq)
 
         # Code table
@@ -108,20 +109,20 @@ class HuffmanCoding:
         return ans
 
 
-def main():
-    data = [3, 3, 3, 0, 0, 0, 0, 0, 0, 2, 3, 5, 5, 5,
-            5, 5, 4, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    print("Input data: {}".format(data))
-    huff = HuffmanCoding()
+# def main():
+#     data = [3, 3, 3, 0, 0, 0, 0, 0, 0, 2, 3, 5, 5, 5,
+#             5, 5, 4, 4, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+#     print("Input data: {}".format(data))
+#     huff = HuffmanCoding()
 
-    encoded = huff.encode(data)
-    decoded = huff.decode(encoded)
+#     encoded = huff.encode(data)
+#     decoded = huff.decode(encoded)
 
-    print("Encoded data: {}".format(encoded))
-    print("Decoded data: {}".format(decoded))
+#     print("Encoded data: {}".format(encoded))
+#     print("Decoded data: {}".format(decoded))
 
-    print(huff.code)
+#     print(huff.code)
 
 
-if __name__ == '__main__':
-    main()
+# if __name__ == '__main__':
+#     main()

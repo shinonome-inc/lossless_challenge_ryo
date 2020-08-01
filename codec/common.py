@@ -7,6 +7,18 @@ BYTES_M = 2
 BYTES_H = 2
 BYTES_W = 2
 
+# image info
+IMG_H = 28
+IMG_W = 28
+
+# flag info
+FLAG_RNG = 0
+FLAG_HUF = 1
+BYTES_FLAG = 1
+
+# dict info
+BYTES_DICT = 1
+
 # filter and MAP info
 BYTES_FILTER = 1
 NUM_FILTER = 4
