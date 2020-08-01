@@ -7,7 +7,7 @@ from codec import Encoder, Decoder
 from codecfile import compress, extract
 from llc_io import imread, imwrite
 
-INPUT_IMG = imageio.imread("/Users/ryomasutani/Desktop/playground/loss_test/zeros.png")
+INPUT_IMG = imageio.imread("/Users/ryomasutani/Desktop/playground/loss_test/test2.png")
 
 def test_decoder():
     enc = Encoder(INPUT_IMG, 1, 1)

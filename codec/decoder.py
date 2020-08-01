@@ -72,7 +72,7 @@ class Decoder(_CodecBase):
         
         
     def decode(self):
-        print("Compressed with: {}".format)
+        print("Compressed with: {}".format(self._flag))
         print("Filter: {}, map: {}".format(self._filter_id, self._map_id))
 
         data = None
@@ -83,8 +83,8 @@ class Decoder(_CodecBase):
             data = []
             self._decoder.start()
 
-            for y in range(self._height):
-                for x in range(self._width):
+            for y in range(IMG_H):
+                for x in range(IMG_W):
                     value = self._decode_per_pixel()
                     self._update_histogram(value)
                     data.append(value)
