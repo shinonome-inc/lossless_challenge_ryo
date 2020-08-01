@@ -7,6 +7,7 @@ BYTES_M = 2
 BYTES_H = 2
 BYTES_W = 2
 BYTES_FLAG = 1
+BYTES_DICT = 1
 
 # filter and MAP info
 BYTES_FILTER = 1
